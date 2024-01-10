@@ -1,158 +1,195 @@
-@import url('https://fonts.googleapis.com/css2?family=Noto+Sans:wght@200&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Merriweather+Sans:wght@500&display=swap');
+  @import url('https://fonts.googleapis.com/css2?family=Noto+Sans:wght@100;200;300&display=swap');
 
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-    font-family: 'Noto Sans', sans-serif;
-    font-weight: 900;
-}
+  * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Noto Sans', sans-serif;
+      font-weight: 900;
+  }
 
-body {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    max-width: 100vw;
-    min-height: 100vh;
-}
+  body {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      max-width: 100vw;
+      /* min-height: 100vh; */
+  }
 
-.container {
-    display: flex;
-    flex-direction: row;
-    margin: 1px 0 20px 0;
-    width: 100%;
-    justify-content: center;
-    gap: .7rem;
-    height: 40px;
-}
+  .container {
+      display: flex;
+      flex-direction: row;
+      margin: 1px 0 20px 0;
+      width: 100%;
+      justify-content: center;
+      gap: .7rem;
+      height: 25px;
+  }
 
-.wrapper {
-    position: relative;
-    height: 100%;
-    /* width: 100%; */
-}
+  .wrapper {
+      position: relative;
+      height: 100%;
+      /* width: 100%; */
+  }
 
-.radios {
-    position: absolute;
-    top: 100%;
-    left: 0;
-    width: 100%;
-    margin: 0;
-    display: none;
-    border: 1px solid #ccc;
-    border-top: 0;
-    z-index: 1;
-}
+  .checkboxes {
+      position: absolute;
+      top: 100%;
+      left: 0;
+      width: 100%;
+      margin: 0;
+      display: none;
+      border: 1px solid #ccc;
+      border-top: 0;
+      z-index: 1;
+  }
 
-.radios label {
-    display: flex;
-    flex-direction: row;
-    cursor: pointer;
-    gap: .2em;
-    width: 100%;
-    user-select: none;
-    border-bottom: 1px solid #555;
-    padding: 5px 5px;
-}
+  .checkboxes label {
+      display: flex;
+      flex-direction: row;
+      cursor: pointer;
+      gap: .2em;
+      width: 100%;
+      user-select: none;
+      border-bottom: 1px solid #555;
+      padding: 5px 5px;
+  }
 
-label:last-child {
-    border-bottom: 0;
-}
+  label:last-child {
+      border-bottom: 0;
+  }
 
-input[type="checkbox"] {
-    width: 20px;
-}
+  input[type="checkbox"] {
+      width: 20px;
+  }
 
-.inner-wrap {
-    overflow: auto;
-    max-height: 200px;
-    padding: 5px 0 0px 0;
-    background-color: whitesmoke;
-}
+  .inner-wrap {
+      overflow: auto;
+      max-height: 200px;
+      padding: 5px 0 0px 0;
+      background-color: whitesmoke;
+  }
 
-.active {
-    display: block;
-}
+  .active {
+      display: block;
+  }
 
-.btn {
-    width: 400px;
-    height: 100%;
-    font-size: 1rem;
-    border: none;
-    border-radius: 10px;
-}
+  .btn {
+      width: 400px;
+      height: 100%;
+      font-size: 0.9rem;
+      border: none;
+      border-radius: 5px;
+  }
 
-.submit-btn {
-    background-color: rgba(0, 0, 255, 0.603);
-    color: white;
-}
+  .submit-btn {
+      background-color: rgba(0, 0, 255, 0.603);
+      color: white;
+  }
 
-.submit-btn:hover {
-    background-color: rgba(164, 164, 219, 0.603);
-}
+  .submit-btn:hover {
+      background-color: rgba(164, 164, 219, 0.603);
+  }
 
-.myInput {
-    width: 100%;
-    padding: 5px 5px;
-}
+  .myInput {
+      width: 100%;
+      padding: 5px 5px;
+  }
 
-.container table * {
-    border: 1px double rgb(0, 0, 0);
-}
+  .container table * {
+      border: 1px double rgb(0, 0, 0);
+  }
 
-.container-table {
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    gap: 10px;
-    width: 90vw;
-    height: 90vh;
-    overflow-x: scroll;
-}
+  .container-table {
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      gap: 10px;
+      width: 97vw;
+      overflow-x: auto;
+  }
 
-.container-table .one-table {
-    width: 100vw;
-    overflow: scroll;
-}
+  .container-table .country {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      margin-bottom: 1rem;
+      border: 1px solid #bfbfbf;
+  }
 
-.container-table table {
-    table-layout: auto;
-    border-collapse: collapse;
-    box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
-}
+  .country h2 {
+      text-align: center;
+      font-size: 1rem;
+  }
 
-.container-table table th {
-    text-transform: capitalize;
-    background-color: rgba(181, 216, 169, .8);
-    font-family: 'Merriweather Sans', sans-serif;
-    padding: 12px 15px;
-    white-space: nowrap;
-    border-left: 1px solid #e0e0e0;
-    border-bottom: 1px solid #e0e0e0;
-}
+  .tables-div {
+      padding: 0 10px;
+      display: flex;
+      flex-direction: row;
+      gap: 10px;
+      /* width: 100%; */
+      /* height: 100%; */
+      overflow: hidden;
+  }
 
-.container-table table td {
-    font-size: .9rem;
-    text-align: center;
-    padding: .5rem .5rem;
-    white-space: nowrap;
-    border-left: 1px solid #e0e0e0;
-    border-bottom: 1px solid #e0e0e0;
-}
+  .container-table .one-table {
+      width: 100%;
+      overflow: scroll;
+      max-height: 500px;
+  }
 
-::-webkit-scrollbar {
-    width: 2px;
-}
+  .container-table table {
+      overflow: scroll;
+      table-layout: auto;
+      border-collapse: collapse;
+      box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
+  }
 
-::-webkit-scrollbar-track {
-    background-color: #f1f1f1;
-}
 
-::-webkit-scrollbar-thumb {
-    background-color: #888;
-}
+  .container-table table th {
+      text-transform: capitalize;
+      background-color: rgba(181, 216, 169, .8);
+      font-family: 'Merriweather Sans', sans-serif;
+      /* padding: 12px 15px; */
+      padding: 8px 10px;
+      white-space: nowrap;
+      border-left: 1px solid #e0e0e0;
+      border-bottom: 1px solid #e0e0e0;
+      font-size: .7rem;
+  }
 
-::-webkit-scrollbar-thumb:hover {
-    background-color: #555;
-}
+  .container-table table td {
+      font-family: 'Noto Sans', sans-serif;
+      font-weight: 300;
+      text-shadow: 0 1px 0 rgba(0, 0, 0, 0.3);
+      /* font-size: .7rem; */
+      font-size: 11px;
+      text-align: center;
+      /* padding: .5rem .5rem; */
+      padding: .2rem .2rem;
+      white-space: nowrap;
+      border-left: 1px solid #e0e0e0;
+      border-bottom: 1px solid #e0e0e0;
+  }
+
+  html::-webkit-scrollbar {
+      width: 5px;
+      height: 5px;
+  }
+
+  .container-table .one-table::-webkit-scrollbar {
+      width: 2px;
+      height: 2px;
+  }
+
+  ::-webkit-scrollbar-track {
+      background-color: #f1f1f1;
+  }
+
+  ::-webkit-scrollbar-thumb {
+      background-color: #888;
+  }
+
+  ::-webkit-scrollbar-thumb:hover {
+      background-color: #555;
+  }
