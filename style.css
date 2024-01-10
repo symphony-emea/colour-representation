@@ -19,7 +19,7 @@ body {
 .container {
     display: flex;
     flex-direction: row;
-    margin: 1px 0 20px 0;
+    margin: 10px 20px;
     width: 100%;
     justify-content: center;
     gap: .7rem;
@@ -41,7 +41,7 @@ body {
     display: none;
     border: 1px solid #ccc;
     border-top: 0;
-    z-index: 1;
+    z-index: 4;
 }
 
 .checkboxes label {
@@ -105,7 +105,7 @@ input[type="checkbox"] {
     flex-direction: column;
     justify-content: space-between;
     gap: 10px;
-    width: 97vw;
+    width: 90vw;
     overflow-x: auto;
 }
 
@@ -145,18 +145,17 @@ input[type="checkbox"] {
     box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
 }
 
-
 .container-table table th {
     text-transform: capitalize;
-    background-color: rgba(181, 216, 169, .8);
-    font-family: 'Merriweather Sans', sans-serif;
-    /* padding: 12px 15px; */
+    background-color: #307DEF;
+    /* font-family: 'Merriweather Sans', sans-serif; */
     padding: 8px 10px;
     white-space: nowrap;
-    border-left: 1px solid #e0e0e0;
-    border-bottom: 1px solid #e0e0e0;
     font-size: .7rem;
-    border:none;
+    font-weight: 600;
+    letter-spacing: 1px;
+    border: none;
+    color: white;
 }
 
 .container-table table td {
@@ -172,7 +171,43 @@ input[type="checkbox"] {
     white-space: nowrap;
     border-left: 1px solid #e0e0e0;
     border-bottom: 1px solid #e0e0e0;
-    border:none;
+    border: none;
+}
+
+table tr:first-child th:first-child {
+    background-color: white;
+}
+
+table th img:first-child {
+    left: 10px;
+    height: 1.8rem;
+    mix-blend-mode: multiply;
+    text-align: center;
+    aspect-ratio: 16/5;
+}
+
+table thead {
+    position: sticky;
+    top: 0;
+    z-index: 1;
+    background-color: rgb(181, 216, 169);
+    z-index: 2;
+}
+
+td:nth-child(1),
+th:nth-child(1) {
+    position: sticky;
+    left: 0;
+    z-index: 1;
+    background-color: white;
+}
+
+td:nth-child(2),
+th:nth-child(2) {
+    position: sticky;
+    left: 70px;
+    z-index: 1;
+    background-color: white;
 }
 
 html::-webkit-scrollbar {
