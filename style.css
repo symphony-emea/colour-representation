@@ -13,6 +13,7 @@ body {
     flex-direction: column;
     align-items: center;
     max-width: 100vw;
+    margin-top: 1rem;
     /* min-height: 100vh; */
 }
 
@@ -83,12 +84,11 @@ input[type="checkbox"] {
 }
 
 .submit-btn {
-    background-color: rgba(0, 0, 255, 0.603);
-    color: white;
+    background-color: rgba(212, 212, 214, 0.9);
 }
 
 .submit-btn:hover {
-    background-color: rgba(164, 164, 219, 0.603);
+    background-color: rgba(212, 212, 214, 0.7);
 }
 
 .myInput {
