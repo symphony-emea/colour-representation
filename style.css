@@ -84,11 +84,12 @@ input[type="checkbox"] {
 }
 
 .submit-btn {
-    background-color: rgba(212, 212, 214, 0.9);
+    background-color: rgba(100, 100, 102, 0.9);
+    color: white;
 }
 
 .submit-btn:hover {
-    background-color: rgba(212, 212, 214, 0.7);
+    background-color: rgba(100, 100, 102, 0.8);
 }
 
 .myInput {
@@ -206,7 +207,7 @@ table thead {
     z-index: 2;
 }
 
-td:nth-child(1),
+/* td:nth-child(1), */
 th:nth-child(1) {
     position: sticky;
     left: 0;
@@ -214,7 +215,7 @@ th:nth-child(1) {
     background-color: white;
 }
 
-td:nth-child(2),
+/* td:nth-child(2), */
 th:nth-child(2) {
     position: sticky;
     left: 70px;
@@ -225,6 +226,10 @@ th:nth-child(2) {
 html::-webkit-scrollbar {
     width: 5px;
     height: 5px;
+}
+
+tr {
+    border-inline: 1px solid rgba(0, 0, 0, 0.5);
 }
 
 .container-table .one-table::-webkit-scrollbar {
