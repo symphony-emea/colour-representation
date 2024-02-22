@@ -278,7 +278,8 @@ let color_code_by_brands = {
         "Alpine Green": "#505F4E",
         "(PRODUCT) RED": "#FF3B30",
         "PRODUCT (Red)": "#FF3B30",
-        "mountain blue": "#4E6CB4",
+        "Mountain blue": "#4E6CB4",
+        "Graphite Grey": "#5C5B57",
     },
 
     "i13 pro max": {
@@ -288,6 +289,7 @@ let color_code_by_brands = {
         "Sierra Blue": "#9BB5CE",
         "Alpine Green": "#505F4E",
         "mountain blue": "#4E6CB4",
+        "Graphite Grey": "#5C5B57",
     },
 
     "i13 mini": {
@@ -493,7 +495,9 @@ function drawTable({
                             if (index >= 4) table_data[country][brand][model][storage].push({
                                 color_name: row.toLowerCase(),
                                 color_name_original: row,
-                                hex_code: color_code_by_brands[brand.toLowerCase()]?.[model.toLowerCase()]?.[row.toLowerCase()] || color_code[row.toLowerCase()]
+                                hex_code: color_code[row.toLowerCase()] != undefined ? color_code[row.toLowerCase()] :
+                                    color_code_by_brands[model.toLowerCase()] != undefined ?
+                                        color_code_by_brands[model.toLowerCase()][row.toLowerCase()] : ""
                             });
                         });
 
