@@ -497,7 +497,7 @@ function drawTable({
                                 color_name_original: row,
                                 hex_code: color_code[row.toLowerCase()] != undefined ? color_code[row.toLowerCase()] :
                                     color_code_by_brands[model.toLowerCase()] != undefined ?
-                                        color_code_by_brands[model.toLowerCase()][row.toLowerCase()] : ""
+                                        color_code_by_brands[model.toLowerCase()][row.toLowerCase()] : "white"
                             });
                         });
 
