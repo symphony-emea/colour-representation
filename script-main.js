@@ -259,6 +259,36 @@ fetch(file_path).then(res => res.text()).then(data => {
 
 //-------------------------------------------------------------------------------------------------------------//
 let color_code_by_brands = {
+    "i12": {
+        "Midnight": "#343b43",
+        "(PRODUCT) Red": "#fb1230",
+        "PRODUCT (Red)": "#FF3B30",
+        "Starlight": "#faf7f2",
+        "Graphite Grey": "#5C5B57",
+        "Pacific Blue": "#0A0A0A",
+    },
+    "i12 mini": {
+        "Midnight": "#343b43",
+        "(PRODUCT) Red": "#fb1230",
+        "PRODUCT (Red)": "#FF3B30",
+        "Starlight": "#faf7f2",
+        "Graphite Grey": "#5C5B57",
+        "Pacific Blue": "#0A0A0A",
+    },
+    "i12 pro": {
+        "Graphite": "#5C5B57",
+        "Gold": "#F9E5C9",
+        "Silver": "#F5F5F0",
+        "Pacific Blue": "#0A0A0A",
+        "Graphite Grey": "#5C5B57",
+    },
+    "i12 pro max": {
+        "Graphite": "#5C5B57",
+        "Gold": "#F9E5C9",
+        "Silver": "#F5F5F0",
+        "Pacific Blue": "#0A0A0A",
+        "Graphite Grey": "#5C5B57",
+    },
     "i13": {
         "Red": "#A50011",
         "Pink": "#FAE0D8",
@@ -268,7 +298,6 @@ let color_code_by_brands = {
         "Starlight": "#F9F3EE",
         "(PRODUCT) Red": "#FF3B30",
         "PRODUCT (Red)": "#FF3B30",
-        "Star White": "#FF3B30",
     },
 
     "i13 pro": {
@@ -279,14 +308,8 @@ let color_code_by_brands = {
         "Alpine Green": "#505F4E",
         "(PRODUCT) RED": "#FF3B30",
         "PRODUCT (Red)": "#FF3B30",
-        "mountain blue": "#4E6CB4",
-        "Graphite Grey": "##46494F",
-        "Daylight blue": "#26c3db",
-        "Mountain pine green": "#01796F",
-        "strong graphite": "#5d5e67",
-
-
-
+        "Mountain blue": "#4E6CB4",
+        "Graphite Grey": "#5C5B57",
     },
 
     "i13 pro max": {
@@ -296,11 +319,7 @@ let color_code_by_brands = {
         "Sierra Blue": "#9BB5CE",
         "Alpine Green": "#505F4E",
         "mountain blue": "#4E6CB4",
-        "Daylight blue": "#26c3db",
-        "Graphite Grey": "##46494F",
-        "Daylight blue": "#26c3db",
-        "Mountain pine green": "#01796F",
-        "strong graphite": "#5d5e67",
+        "Graphite Grey": "#5C5B57",
     },
 
     "i13 mini": {
@@ -312,56 +331,32 @@ let color_code_by_brands = {
         "Starlight": "#F9F3EE",
         "(PRODUCT) Red": "#FF3B30",
         "PRODUCT (Red)": "#FF3B30",
-        "Star white": "#F9FFFA",
-        "Midnight Black": "##00040D",
     },
 
     "i14": {
         "Midnight": "#343b43",
         "(PRODUCT) Red": "#fb1230",
         "PRODUCT (Red)": "#FF3B30",
-        "Starlight": "#faf7f2",
-        "Gelb" : "#FFFF00",
+        "Starlight": "#faf7f2"
     },
     "i14 plus": {
         "Midnight": "#343b43",
         "(PRODUCT) Red": "#fb1230",
         "PRODUCT (Red)": "#FF3B30",
-        "Starlight": "#faf7f2",
-        "Gelb" : "#FFFF00",
+        "Starlight": "#faf7f2"
     },
     "i14 pro": {
         "Deep Purple": "#5D3FD3",
         "Golden": "#FFD700",
         "Space Black": "#0A0A0A",
         "Silver": "#F5F5F0",
-        "Golden" : "#FFD700",
     },
     "i14 pro max": {
         "Deep Purple": "#5D3FD3",
         "Golden": "#FFD700",
         "Space Black": "#0A0A0A",
         "Silver": "#F5F5F0",
-        "Golden" : "#FFD700",
     },
-    "ise3": {
-        "Star white": "#F9FFFA",
-        "Moon light": "#FFF8DE",
-        
-    },
-    "i12 Pro": {
-        "Graphite Grey": "##46494F",
-        "Pacific Blue": "#83B0D6",        
-    },
-    "i12 Pro Max": {
-        "Graphite Grey": "##46494F",
-        "Pacific Blue": "#83B0D6",        
-    },
-    "ise2": {
-        "Star white": "#F9FFFA",
-    },
-    
-
 };
 color_code_by_brands = Object.keys(color_code_by_brands).reduce((acc, key) => {
     acc[key.toLowerCase()] = Object.keys(color_code_by_brands[key]).reduce((acc1, key1) => {
@@ -379,6 +374,19 @@ let color_code = {
     "White": "#FBF7F4",
     "Black": "#000000",
     "Mint": "#d3e4da",
+    "Star white": "#FFFFE0",
+    "Indigo": "#4B0082",
+    "Tangerine": "#F28500",
+    "Rose Gold": "#B76E79",
+    "Ice Blue": "#4E8EF7",
+    "Daylight blue": "#A4C6D3",
+    "Mountain pine green": "#4E6CB4",
+    "Olive Green": "#808000",
+    "Golden Pink": "#FF91A4",
+    "Volatile Black": "#000000",
+    "Bordeaux": "#800020",
+    "Sand": "#C2B280",
+    "Phantom Lavender": "#E6E6FA",
 
     "Awesome Black": "#1E1E1E",
     "Awesome Blue": "#9bc9e1",
@@ -425,7 +433,6 @@ let color_code = {
     "Phantom White": "#F8F8FF",
     "Lavender": "#E6E6FA",
     "Olive": "#808000",
-    "Olive Green": "#BAB86C",
 
     "Phantom Black": "#000000",
     "Phantom Brown": "#836953",
@@ -462,6 +469,7 @@ let color_code = {
     "Pee": "#FFFF00",
     "Awesome Mint": "#c2dbd5",
     "Gold Pink": "#FF91A4",
+    "Moon light": "#F5F5F5",
 
     "Phantom Violet": "#9896b9",
     "Phantom Grey": "#424448",
@@ -478,17 +486,8 @@ let color_code = {
     "Natural Titanium": "#b7b1ac",
     "Blue Titanium": "#6b7382",
     "Yellow": "#f9e379",
-    "Rose Gold" : "#b76e79",
-    "Indigo" : "#4B0082",
-    "Tangerine" : "#f28500",
-    "Golden Pink" : "#B76E79",
-    "Volatile Black" : "#2e2f31",
-    "Phantom Lavender" : "#f1e2f7",
-    "Bordeaux" : "	#4C1C24",
-    "Ice Blue" : "739BD0",
-    //"Gaffe" : "",
-    "Sand" : "#c2b280",
 };
+
 color_code = Object.keys(color_code).reduce((acc, key) => {
     acc[key.toLowerCase()] = color_code[key];
     return acc;
