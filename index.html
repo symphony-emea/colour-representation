@@ -1,41 +1,452 @@
 <!DOCTYPE html>
 <html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Color Display - Samsung vs Apple</title>
+		<link rel="stylesheet" href="styles.css" />
+		<link rel="icon" type="image/svg+xml" href="favicon.svg" />
+	</head>
+	<body>
+		<div class="container">
+			<div class="filters">
+				<div class="filter-row">
+					<div class="filter-group">
+						<div class="custom-select">
+							<div class="select-button" id="countryButton">
+								<span class="select-text">Select countries...</span>
+								<span class="select-arrow">▼</span>
+							</div>
+							<div class="select-dropdown" id="countryDropdown"></div>
+						</div>
+					</div>
 
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="style.css">
-    <link rel="stylesheet"
-        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" />
-    <title>Color Representation</title>
-</head>
+					<div class="filter-group">
+						<div class="custom-select">
+							<div class="select-button" id="modelButton">
+								<span class="select-text">Select models...</span>
+								<span class="select-arrow">▼</span>
+							</div>
+							<div class="select-dropdown" id="modelDropdown"></div>
+						</div>
+					</div>
 
-<body>
-    <div class="container">
-        <div class="wrapper countries">
-            <button class="country-btn btn">Country</button>
-            <div class="checkboxes" id="Categories">
-                <div class="inner-wrap"></div>
-            </div>
-        </div>
-        <div class="wrapper models">
-            <button class="model-btn btn">Model</button>
-            <div class="checkboxes" id="Categories">
-                <div class="inner-wrap"></div>
-            </div>
-        </div>
-        <!-- <div class="wrapper storages">
-            <button class="storage-btn btn">Storage</button>
-            <div class="checkboxes" id="Categories">
-                <div class="inner-wrap"></div>
-            </div>
-        </div> -->
-        <button class="submit-btn btn">Apply</button>
-    </div>
-    <div class="container-table">
-    </div>
-    <script src="script-main.js"></script>
-</body>
+					<button class="apply-btn" onclick="applyFilters()">Apply Filters</button>
+				</div>
+			</div>
 
+			<div class="countries-container" id="countriesContainer">
+				<div class="loading">Loading data...</div>
+			</div>
+		</div>
+
+		<script>
+			let colorsData = {};
+			let currentFilters = {
+				countries: [],
+				models: [],
+			};
+
+			// Custom dropdown functionality
+			class CustomSelect {
+				constructor(buttonId, dropdownId, type) {
+					this.button = document.getElementById(buttonId);
+					this.dropdown = document.getElementById(dropdownId);
+					this.type = type;
+					this.selectedValues = [];
+					this.options = [];
+
+					this.init();
+				}
+
+				init() {
+					// Button click handler
+					this.button.addEventListener("click", (e) => {
+						e.preventDefault();
+						e.stopPropagation();
+						this.toggle();
+					});
+
+					// Close dropdown when clicking outside
+					document.addEventListener("click", (e) => {
+						if (!this.button.contains(e.target) && !this.dropdown.contains(e.target)) {
+							this.close();
+						}
+					});
+				}
+
+				toggle() {
+					const isOpen = this.dropdown.classList.contains("show");
+					this.closeAllDropdowns();
+					if (!isOpen) {
+						this.open();
+					}
+				}
+
+				open() {
+					this.dropdown.classList.add("show");
+					this.button.classList.add("active");
+				}
+
+				close() {
+					this.dropdown.classList.remove("show");
+					this.button.classList.remove("active");
+				}
+
+				closeAllDropdowns() {
+					document.querySelectorAll(".select-dropdown").forEach((dropdown) => {
+						dropdown.classList.remove("show");
+					});
+					document.querySelectorAll(".select-button").forEach((button) => {
+						button.classList.remove("active");
+					});
+				}
+
+				setOptions(options) {
+					this.options = options;
+					this.selectedValues = []; // Reset selections when options change
+					this.render();
+					this.updateButton();
+				}
+
+				render() {
+					this.dropdown.innerHTML = "";
+
+					// Add Select All option
+					const selectAllElement = document.createElement("div");
+					selectAllElement.className = "select-all-option";
+
+					const allSelected = this.selectedValues.length === this.options.length && this.options.length > 0;
+					const selectAllText = allSelected ? "Deselect All" : "Select All";
+
+					selectAllElement.innerHTML = `
+						<div class="select-all-checkbox ${allSelected ? "checked" : ""}"></div>
+						<span>${selectAllText}</span>
+					`;
+
+					selectAllElement.addEventListener("click", (e) => {
+						e.preventDefault();
+						e.stopPropagation();
+						this.toggleSelectAll();
+					});
+
+					this.dropdown.appendChild(selectAllElement);
+
+					// Add regular options
+					this.options.forEach((option) => {
+						const optionElement = document.createElement("div");
+						optionElement.className = "select-option";
+
+						const isSelected = this.selectedValues.includes(option.value);
+						optionElement.innerHTML = `
+							<div class="select-checkbox ${isSelected ? "checked" : ""}"></div>
+							<span>${option.text}</span>
+						`;
+
+						// Add click event with proper binding
+						optionElement.addEventListener("click", (e) => {
+							e.preventDefault();
+							e.stopPropagation();
+							console.log("Option clicked:", option.value, "Current selected:", this.selectedValues);
+							this.toggleOption(option.value);
+						});
+
+						this.dropdown.appendChild(optionElement);
+					});
+				}
+
+				toggleOption(value) {
+					console.log("toggleOption called with:", value);
+					console.log("Current selectedValues before toggle:", this.selectedValues);
+
+					const index = this.selectedValues.indexOf(value);
+					if (index > -1) {
+						// Remove if already selected
+						this.selectedValues.splice(index, 1);
+						console.log("Removed:", value);
+					} else {
+						// Add if not selected
+						this.selectedValues.push(value);
+						console.log("Added:", value);
+					}
+
+					console.log("New selectedValues after toggle:", this.selectedValues);
+					this.updateButton();
+					this.render(); // Re-render to update checkboxes
+				}
+
+				toggleSelectAll() {
+					console.log("toggleSelectAll called");
+					console.log("Current selectedValues:", this.selectedValues);
+					console.log("Total options:", this.options.length);
+
+					if (this.selectedValues.length === this.options.length) {
+						// Deselect all
+						this.selectedValues = [];
+						console.log("Deselected all");
+					} else {
+						// Select all
+						this.selectedValues = this.options.map((option) => option.value);
+						console.log("Selected all");
+					}
+
+					console.log("New selectedValues after toggle all:", this.selectedValues);
+					this.updateButton();
+					this.render();
+				}
+
+				updateButton() {
+					const textSpan = this.button.querySelector("span:first-child");
+					if (!textSpan) {
+						console.error("Text span not found in button");
+						return;
+					}
+
+					if (this.selectedValues.length === 0) {
+						textSpan.textContent = `Select ${this.type}...`;
+						textSpan.className = "select-text";
+					} else if (this.selectedValues.length === 1) {
+						const selectedOption = this.options.find((opt) => opt.value === this.selectedValues[0]);
+						textSpan.textContent = selectedOption ? selectedOption.text : this.selectedValues[0];
+						textSpan.className = "";
+					} else {
+						textSpan.innerHTML = `${this.selectedValues.length} ${this.type} selected <span class="select-count">${this.selectedValues.length}</span>`;
+						textSpan.className = "";
+					}
+
+					console.log("Button updated, selected count:", this.selectedValues.length);
+				}
+
+				getSelectedValues() {
+					return [...this.selectedValues]; // Return a copy
+				}
+
+				clearSelection() {
+					this.selectedValues = [];
+					this.updateButton();
+					this.render();
+				}
+			}
+
+			let countrySelect, modelSelect;
+
+			// Load the colors data
+			async function loadData() {
+				try {
+					const response = await fetch("colors.json");
+					colorsData = await response.json();
+
+					console.log("Data loaded, initializing dropdowns...");
+
+					// Initialize custom selects
+					countrySelect = new CustomSelect("countryButton", "countryDropdown", "countries");
+					modelSelect = new CustomSelect("modelButton", "modelDropdown", "models");
+
+					console.log("Dropdowns initialized:", countrySelect, modelSelect);
+
+					populateFilters();
+					displayData();
+				} catch (error) {
+					console.error("Error loading data:", error);
+					document.getElementById("countriesContainer").innerHTML =
+						'<div class="no-data">Error loading data</div>';
+				}
+			}
+
+			// Populate filter dropdowns
+			function populateFilters() {
+				console.log("Populating filters...");
+
+				// Get all countries
+				const countries = Object.keys(colorsData).sort();
+				console.log("Countries found:", countries.length);
+
+				const countryOptions = countries.map((country) => ({
+					value: country,
+					text: country,
+				}));
+
+				console.log("Setting country options:", countryOptions.length);
+				countrySelect.setOptions(countryOptions);
+
+				// Get all unique models
+				const models = new Set();
+				countries.forEach((country) => {
+					const countryData = colorsData[country];
+					if (countryData.Samsung) {
+						Object.keys(countryData.Samsung).forEach((model) => models.add(model));
+					}
+					if (countryData.Apple) {
+						Object.keys(countryData.Apple).forEach((model) => models.add(model));
+					}
+				});
+
+				const modelOptions = Array.from(models)
+					.sort()
+					.map((model) => ({
+						value: model,
+						text: model.toUpperCase(),
+					}));
+
+				console.log("Setting model options:", modelOptions.length);
+				modelSelect.setOptions(modelOptions);
+			}
+
+			// Apply filters
+			function applyFilters() {
+				console.log("Apply filters clicked");
+
+				const selectedCountries = countrySelect.getSelectedValues();
+				const selectedModels = modelSelect.getSelectedValues();
+
+				console.log("Selected countries:", selectedCountries);
+				console.log("Selected models:", selectedModels);
+
+				currentFilters.countries = selectedCountries;
+				currentFilters.models = selectedModels;
+
+				console.log("Updated filters:", currentFilters);
+				displayData();
+			}
+
+			// Get text color based on background brightness
+			function getTextColor(hexCode) {
+				if (!hexCode || typeof hexCode !== "string") {
+					return "#000000"; // Default to black text
+				}
+				const hex = hexCode.replace("#", "");
+				const r = parseInt(hex.substr(0, 2), 16);
+				const g = parseInt(hex.substr(2, 2), 16);
+				const b = parseInt(hex.substr(4, 2), 16);
+				const brightness = (r * 299 + g * 587 + b * 114) / 1000;
+				return brightness > 128 ? "#000000" : "#ffffff";
+			}
+
+			// Create color chip HTML
+			function createColorChip(color) {
+				if (!color || !color.hex_code) {
+					return '<div class="color-chip" style="background-color: #cccccc; color: #000000;">Invalid Color</div>';
+				}
+				const textColor = getTextColor(color.hex_code);
+				const colorName = color.color_name_original || color.color_name || "Unknown";
+				return `
+                <div class="color-chip" style="background-color: ${color.hex_code}; color: ${textColor};">
+                    <div class="color-swatch" style="background-color: ${color.hex_code};"></div>
+                    <span title="${colorName} (${color.hex_code})">${colorName}</span>
+                </div>
+            `;
+			}
+
+			// Create table for brand data
+			function createBrandTable(brandData, brandName) {
+				if (!brandData || Object.keys(brandData).length === 0) {
+					return '<div class="no-data">No products available for the selected filters</div>';
+				}
+
+				let tableHTML = `
+                <div class="table-container">
+                    <table class="products-table">
+                        <thead>
+                            <tr>
+                                <th>Model</th>
+                                <th>Storage</th>
+                                <th>Colors</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                `;
+
+				Object.keys(brandData)
+					.sort()
+					.forEach((model) => {
+						// Filter by selected models
+						if (currentFilters.models.length > 0 && !currentFilters.models.includes(model)) {
+							return;
+						}
+
+						const modelData = brandData[model];
+						Object.keys(modelData)
+							.sort()
+							.forEach((storage) => {
+								const colors = modelData[storage];
+
+								// Ensure colors is an array and filter out invalid entries
+								const validColors = Array.isArray(colors)
+									? colors.filter((color) => color && color.hex_code)
+									: [];
+								const colorsHTML = validColors.map((color) => createColorChip(color)).join("");
+
+								tableHTML += `
+                            <tr>
+                                <td class="model-cell">${model.toUpperCase()}</td>
+                                <td class="storage-cell">${storage}</td>
+                                <td class="colors-cell">${colorsHTML}</td>
+                            </tr>
+                        `;
+							});
+					});
+
+				tableHTML += "</tbody></table></div>";
+				return tableHTML;
+			}
+
+			// Create country section HTML
+			function createCountrySection(country, countryData) {
+				const samsungData = countryData.Samsung || {};
+				const appleData = countryData.Apple || {};
+
+				return `
+                <div class="country-section">
+                    <div class="country-title">${country}</div>
+                    <div class="brands-container">
+                        <div class="brand-section samsung-section">
+                            <div class="brand-header">
+                                <img src="samsung.png" alt="Samsung Logo" class="brand-logo" />
+                                <div class="brand-name">Samsung</div>
+                            </div>
+                            ${createBrandTable(samsungData, "Samsung")}
+                        </div>
+                        <div class="brand-section apple-section">
+                            <div class="brand-header">
+                                <img src="apple.png" alt="Apple Logo" class="brand-logo" />
+                                <div class="brand-name">Apple</div>
+                            </div>
+                            ${createBrandTable(appleData, "Apple")}
+                        </div>
+                    </div>
+                </div>
+            `;
+			}
+
+			// Display data based on current filters
+			function displayData() {
+				const container = document.getElementById("countriesContainer");
+
+				// Determine which countries to show
+				let countriesToShow =
+					currentFilters.countries.length > 0 ? currentFilters.countries : Object.keys(colorsData).sort();
+
+				if (countriesToShow.length === 0) {
+					container.innerHTML = '<div class="no-data">No countries selected</div>';
+					return;
+				}
+
+				let html = "";
+				countriesToShow.forEach((country) => {
+					if (colorsData[country]) {
+						html += createCountrySection(country, colorsData[country]);
+					}
+				});
+
+				if (html === "") {
+					container.innerHTML = '<div class="no-data">No data available for selected filters</div>';
+				} else {
+					container.innerHTML = html;
+				}
+			}
+
+			// Initialize the application
+			window.addEventListener("load", loadData);
+		</script>
+	</body>
 </html>
